@@ -4,6 +4,9 @@ import com.projeto.ecommerce.enums.StatusDoPedido;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
@@ -15,7 +18,7 @@ public class OrderEntity {
     private UUID id;
     private LocalDate moment;
     private StatusDoPedido status;
-    //  Anotation pra falar que é uma relação de muitos pra 1
+
     @ManyToOne
 //  define qual coluna será usada como chave estrangeira na tabela
     @JoinColumn(name = "cliente_id")
@@ -23,6 +26,17 @@ public class OrderEntity {
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL) //tudo oq acontecer com o pedido, acontece com o pagamento
     private PaymentEntity payment;
+
+    @OneToMany(mappedBy = "id.orderEntity")
+    private Set<OrderItem> items = new HashSet<>();
+
+    public List<ProductEntity> getItems() {
+        return items.stream().map(x ->x.getProduct()).toList();
+    }
+
+    public void  setItems (Set<OrderItem> items){
+        this.items = items;
+    }
 
     public UUID getId() {
         return id;
