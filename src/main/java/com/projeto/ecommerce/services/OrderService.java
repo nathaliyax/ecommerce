@@ -1,12 +1,11 @@
 package com.projeto.ecommerce.services;
 
-import com.projeto.ecommerce.DTOs.OrderDTO;
-import com.projeto.ecommerce.DTOs.OrderItemDTO;
+import com.projeto.ecommerce.DTOs.PaymentDTO;
 import com.projeto.ecommerce.entities.OrderEntity;
 import com.projeto.ecommerce.entities.OrderItem;
 import com.projeto.ecommerce.entities.ProductEntity;
 import com.projeto.ecommerce.entities.UserEntity;
-import com.projeto.ecommerce.enums.StatusDoPedido;
+import com.projeto.ecommerce.enums.OrderStatus;
 import com.projeto.ecommerce.repositories.OrderItemRepository;
 import com.projeto.ecommerce.repositories.OrderRepository;
 import com.projeto.ecommerce.repositories.ProductRepository;
@@ -38,10 +37,10 @@ public class OrderService {
     }
 
     @Transactional //salvar pedido e itens
-    public OrderDTO create(OrderDTO dto) {
+    public PaymentDTO create(PaymentDTO dto) {
         OrderEntity order = new OrderEntity();
         order.setMoment(LocalDate.now());
-        order.setStatus(StatusDoPedido.AWAITING_PAYMENT);
+        order.setStatus(OrderStatus.AWAITING_PAYMENT);
 
         // busca o cliente
         UserEntity client = userRepository.findById(dto.getClient())
@@ -54,7 +53,7 @@ public class OrderService {
         Set<OrderItem> orderItems = new HashSet<>();
 
         if (dto.getItems() != null) {
-            for (OrderItemDTO itemDto : dto.getItems()) {
+            for (CategoryDTO itemDto : dto.getItems()) {
 
                 // busca o produto no banco e pega o preço
                 ProductEntity product = productRepository.findById(itemDto.getProductId())
@@ -71,6 +70,6 @@ public class OrderService {
 
         order.setItems(orderItems);
 
-        return new OrderDTO(order);
+        return new PaymentDTO(order);
     }
 }
