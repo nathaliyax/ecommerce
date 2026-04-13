@@ -1,6 +1,6 @@
 package com.projeto.ecommerce.entities;
 
-import com.projeto.ecommerce.enums.RoleEnum;
+import com.projeto.ecommerce.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,7 +29,7 @@ public class UserEntity {
 //  Salvar no banco com as informações do Enum e não com zero, 1, 2...
     @Enumerated(EnumType.STRING)
 //  vai servir pra gerenciar as permissões do usuário
-    private RoleEnum roles;
+    private Role roles;
 //  Anotation pra falar que é uma relaçao 1 para muitos baseado na chave estrangeira client
     @OneToMany(mappedBy = "client")
 //  Criando uma lista pra mostrar todos os pedidos dos Usuários

@@ -1,6 +1,6 @@
 package com.projeto.ecommerce.entities;
 
-import com.projeto.ecommerce.enums.StatusDoPedido;
+import com.projeto.ecommerce.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +23,7 @@ public class OrderEntity {
     private UUID id;
 
     private LocalDate moment;
-    private StatusDoPedido status;
+    private OrderStatus status;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
