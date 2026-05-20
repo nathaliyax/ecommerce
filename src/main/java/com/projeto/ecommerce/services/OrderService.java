@@ -4,7 +4,7 @@ import com.projeto.ecommerce.DTOs.PaymentDTO;
 import com.projeto.ecommerce.entities.OrderEntity;
 import com.projeto.ecommerce.entities.OrderItem;
 import com.projeto.ecommerce.entities.ProductEntity;
-import com.projeto.ecommerce.entities.UserEntity;
+import com.projeto.ecommerce.entities.UserService;
 import com.projeto.ecommerce.enums.OrderStatus;
 import com.projeto.ecommerce.repositories.OrderItemRepository;
 import com.projeto.ecommerce.repositories.OrderRepository;
@@ -43,7 +43,7 @@ public class OrderService {
         order.setStatus(OrderStatus.AWAITING_PAYMENT);
 
         // busca o cliente
-        UserEntity client = userRepository.findById(dto.getClient())
+        UserService client = userRepository.findById(dto.getClient())
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
         order.setClient(client);
 

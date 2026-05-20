@@ -23,6 +23,7 @@ public class ProductEntity {
     private String description;
     private double price;
     private String imgURL;
+    private String photo;
 
     @ManyToMany
     @JoinTable(name = "product_category",

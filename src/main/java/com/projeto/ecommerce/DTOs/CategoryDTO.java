@@ -1,4 +1,4 @@
-package com.dev.ecommerce.dto;
+package com.projeto.ecommerce.DTOs;
 
 public record CategoryDTO(
         Long id,

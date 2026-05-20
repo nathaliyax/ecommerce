@@ -27,7 +27,7 @@ public class OrderEntity {
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
-    private UserEntity client;
+    private UserService client;
 
     @OneToOne(mappedBy = "order", cascade = CascadeType.ALL) // tudo oq acontecer com o pedido, acontece com o pagamento
     private PaymentEntity payment;

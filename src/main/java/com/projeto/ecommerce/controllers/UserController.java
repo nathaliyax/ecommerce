@@ -1,30 +1,35 @@
 package com.projeto.ecommerce.controllers;
-
-import com.dev.ecommerce.service.UserService;
-import com.dev.ecommerce.dto.request.UserRequestDTO;
-
+import java.io.IOException;
 import java.util.List;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+
+import com.projeto.ecommerce.DTOs.response.UserResponseDTO;
+import com.projeto.ecommerce.entities.UserService;
+import com.projeto.ecommerce.services.PhotoService;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import jakarta.validation.Valid;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
     private final UserService userService;
+    private final PhotoService photoService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, PhotoService photoService) {
         this.userService = userService;
+        this.photoService = photoService;
+    }
+
+    @PostMapping
+    public ResponseEntity<?> saveUser(@RequestParam String name, @RequestParam String email, @RequestParam MultipartFile photo) throws IOException {
+
+        String pathPhoto = photoService.savePhoto(photo);
+        return ResponseEntity.ok(userService.saveUser(name, email, pathPhoto));
+
     }
 
     @GetMapping
